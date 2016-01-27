@@ -4,7 +4,10 @@ from .views import *
 from .models import *
 
 urlpatterns = [
-	url(r'^$', WikiHome.as_view(), name='wiki-main'),
+	# Apis
+	url(r'^api/search/$', search, name='wikiapi-search'),
+	url(r'^api/modify/$', modify, name='wikiapi-modify'),
+
 	url(r'^random/$', show_random, name='wiki-random'),
 	url(r'^history/$', show_history_all, name='wiki-history'),
 	url(r'^history/(?P<pk>[\w|\W]+)/$', show_history_detail, name='wiki-historydetail'),
@@ -12,6 +15,5 @@ urlpatterns = [
 	url(r'^(?P<pk>[\w|\W]+)/history/$', show_history, name='wiki-articlehistory'),
 	url(r'^(?P<pk>[\w|\W]+)/$', find_article, name='wiki-article'),
 
-	url(r'^api/search/$', search, name='wikiapi-search'),
-	url(r'^api/modify/$', modify, name='wikiapi-modify'),
+	url(r'^$', WikiHome.as_view(), name='wiki-main'),
 ]

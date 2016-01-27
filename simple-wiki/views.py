@@ -50,7 +50,7 @@ def find_article(request, pk):
 def show_random(request):
     random_idx = random.randint(0, Article.objects.count() - 1)
     random_obj = Article.objects.all()[random_idx]
-    return HttpResponseRedirect(reverse('wikiarticle', kwargs={'pk': random_obj.title}))
+    return HttpResponseRedirect(reverse('wiki-article', kwargs={'pk': random_obj.title}))
 
 def show_history_all(request):
     template_name = 'history.html'

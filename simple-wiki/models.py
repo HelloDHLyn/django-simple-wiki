@@ -47,9 +47,9 @@ def search(request):
     try:
         Article.objects.get(title=req_title)
     except ObjectDoesNotExist:
-        return HttpResponseRedirect(reverse('wikiarticle', kwargs={'pk': req_title}))
+        return HttpResponseRedirect(reverse('wiki-article', kwargs={'pk': req_title}))
     else:
-        return HttpResponseRedirect(reverse('wikiarticle', kwargs={'pk': req_title}))
+        return HttpResponseRedirect(reverse('wiki-article', kwargs={'pk': req_title}))
 
 @login_required(login_url='/accounts/login/')
 def modify(request):
@@ -83,7 +83,7 @@ def modify(request):
     new_history = ModifyHistory(title=req_title, editor=username, diff=diff, code=gen_code())
     new_history.save()
 
-    return HttpResponseRedirect(reverse('wikiarticle', kwargs={'pk': req_title}))
+    return HttpResponseRedirect(reverse('wiki-article', kwargs={'pk': req_title}))
 
 def gen_code():
     return binascii.hexlify(os.urandom(16))

@@ -25,7 +25,7 @@
                 <a class="item" href="../">본문 보기</a>
                 <a class="item" href="../history">편집 역사</a>
                 <div class="right item wikiform titlebar" style="padding: 0">
-                    <form class="ui form" name="wikiForm" method="post" action="/v1/wiki/search/">
+                    <form class="ui form" name="wikiForm" method="post" action="{% url 'wikiapi-search' %}">
                         {% csrf_token %}
                         <div class="ui icon input">
                             <input class="navbar-search" type="text" name="title" placeholder="검색어를 입력...">
@@ -52,7 +52,7 @@
             </div>
             취소선의 문법이 물결표 2개로 변경되었습니다. (예: ~~취소선 내용~~)
         </div>
-        <form class="ui form" action="/v1/wiki/modify/" method="post">
+        <form class="ui form" action="{% url 'wikiapi-modify' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="title" value="{{ title }}">
             <div class="field">
