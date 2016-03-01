@@ -23,10 +23,10 @@ class WikiContent(DetailView):
 
 @login_required(login_url='/accounts/login/')
 def modify_article(request, pk):
-    article = Article.objects.filter(title=pk)
+    article = Article.objects.get(title=pk)
     if article:
-        content = article[0].content
-        code = article[0].code
+        content = article.content
+        code = article.code
 
         if code == 403:
             raise PermissionDenied
@@ -37,15 +37,22 @@ def modify_article(request, pk):
     return render_to_response('modify.html', {'title': pk, 'content': content, 'code': code}, context_instance=RequestContext(request))
 
 def find_article(request, pk):
-    article = Article.objects.filter(title=pk)
-    if article:
-        if article[0].code == 303:
-            article = Article.objects.filter(title=article[0].content)
-            return render_to_response('article.html', {'article': article[0], 'redirect_origin': pk}, context_instance=RequestContext(request))
-        else:
-            return render_to_response('article.html', {'article': article[0]}, context_instance=RequestContext(request))
+    try:
+        article = Article.objects.get(title__iexact=pk)
+    except ObjectDoesNotExist:
+        recommends = Article.objects.filter(title__contains=pk)
+        context = {
+            'title': pk,
+            'recommends': recommends,
+        }
+
+        return render_to_response('notfound.html', context, context_instance=RequestContext(request))
     else:
-        return render_to_response('notfound.html', {'title': pk}, context_instance=RequestContext(request))
+        if article.code == 303:
+            article = Article.objects.get(title=article.content)
+            return render_to_response('article.html', {'article': article, 'redirect_origin': pk}, context_instance=RequestContext(request))
+        else:
+            return render_to_response('article.html', {'article': article}, context_instance=RequestContext(request))
 
 def show_random(request):
     random_idx = random.randint(0, Article.objects.count() - 1)

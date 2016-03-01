@@ -40,6 +40,12 @@
     </div>
     <div class="content article-description">
         <p>해당하는 문서가 없습니다. <a href="modify">작성하러 가기</a></p>
+        <h2>이 문서를 찾고 계시나요?</h2>
+        <ul>
+        {% for article in recommends %}
+            <li><a href="{% url 'wiki-article' article.title %}">{{ article.title }}</a></li>
+        {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock %}
