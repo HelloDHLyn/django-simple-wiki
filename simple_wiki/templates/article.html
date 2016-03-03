@@ -3,14 +3,16 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'wiki.css' %}">
 <link rel="stylesheet" href="{% static 'article.css' %}">
-<script src="{% static 'js/wiki.js' %}"></script>
-<title>검색 실패 | LYnWiki</title>
+<script src="{% static 'wiki.js' %}"></script>
+<script src="{% static 'shortcuts.js' %}"></script>
+<title>{{ article.title }} | LYnWiki</title>
 {% endblock %}
 {% block content %}
 <div class="ui left demo vertical inverted sidebar labeled icon menu">
-    <a class="active item"><i class="home icon"></i>LYnWiki</a>
+    <a class="active item" href="/wiki"><i class="home icon"></i>LYnWiki</a>
     <a class="item" href="/wiki/random"><i class="random icon"></i>랜덤</a>
-    <a class="item" href="modify"><i class="write icon"></i>항목 만들기</a>
+    <a class="item" href="modify"><i class="write icon"></i>편집</a>
+    <a class="item" href="history"><i class="history icon"></i>편집 역사</a>
 </div>
 <div class="pusher">
     <div class="ui inverted vertical masthead center aligned segment">
@@ -21,9 +23,10 @@
                 </a>
                 <a class="active item" href="/wiki">LYnWiki</a>
                 <a class="item" href="/wiki/random">랜덤</a>
-                <a class="item" href="modify">항목 만들기</a>
+                <a class="item" href="modify">편집</a>
+                <a class="item" href="history">편집 역사</a>
                 <div class="right item wikiform titlebar" style="padding: 0">
-                    <form class="ui form" name="wikiForm" method="post" action="/v1/wiki/search/">
+                    <form class="ui form" name="wikiForm" method="post" action="{% url 'wikiapi-search' %}">
                         {% csrf_token %}
                         <div class="ui icon input">
                             <input class="navbar-search" type="text" name="title" placeholder="검색어를 입력...">
@@ -35,11 +38,20 @@
         </div>
     </div>
     <div class="header">
-        <h1>{{ title }}</h1>
-        <h2>검색 실패</h2>
+        <h1>{{ article.title }}</h1>
+        <h2>{{ article.subtitle }}</h2>
     </div>
     <div class="content article-description">
-        <p>해당하는 문서가 없습니다. <a href="modify">작성하러 가기</a></p>
+        {% load markup_tags %}
+        {% if redirect_origin %}
+        <div class="ui icon info message">
+            <i class="share icon"></i>
+            <div class="content">
+                <p>{{ redirect_origin }} 문서에서 넘어왔습니다. [<a href="/wiki/{{ redirect_origin }}/modify">넘겨주기 편집</a>]</p>
+            </div>
+        </div>
+        {% endif %}
+        {{ article.content|striptags|apply_markup:"markdown" }}
     </div>
 </div>
 {% endblock %}

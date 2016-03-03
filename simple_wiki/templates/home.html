@@ -3,7 +3,8 @@
 {% load staticfiles %}
 <title>메인 | LYnWiki</title>
 <link rel="stylesheet" href="{% static 'wiki.css' %}">
-<script src="{% static 'js/wiki.js' %}"></script>
+<script src="{% static 'wiki.js' %}"></script>
+<script src="{% static 'shortcuts.js' %}"></script>
 {% endblock %}
 {% block content %}
 <!-- Page Contents -->
@@ -25,7 +26,6 @@
                 <a class="item" href="/wiki/history">최근 변경</a>
                 <a class="item" href="/blog/">블로그</a>
                 <div class="right item">
-                    <a class="github-button" href="https://github.com/HelloDHLyn/lynlab" data-count-href="/HelloDHLyn/lynlab/watchers" data-count-api="/repos/HelloDHLyn/lynlab#subscribers_count" data-count-aria-label="# watchers on GitHub" aria-label="Watch HelloDHLyn/lynlab on GitHub">Watch</a>
                     {% if user.is_authenticated %}
                     <a class="ui inverted button" href="/accounts/logout">로그아웃</a>
                     {% endif %}
@@ -41,7 +41,7 @@
                 LYnWiki α
             </h1>
             <h2>전 지구상의 잡지식 집합소</h2>
-            <form class="ui form wikiform" name="wikiForm" method="post" action="/v1/wiki/search/">
+            <form class="ui form wikiform" name="wikiForm" method="post" action="{% url 'wikiapi-search' %}">
                 {% csrf_token %}
                 <div class="ui icon input">
                     <input type="text" name="title" placeholder="검색어를 입력...">

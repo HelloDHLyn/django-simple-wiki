@@ -3,15 +3,15 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'wiki.css' %}">
 <link rel="stylesheet" href="{% static 'article.css' %}">
-<script src="{% static 'js/wiki.js' %}"></script>
-<title>편집 역사 | LYnWiki</title>
+<script src="{% static 'wiki.js' %}"></script>
+<script src="{% static 'shortcuts.js' %}"></script>
+<title>검색 실패 | LYnWiki</title>
 {% endblock %}
 {% block content %}
 <div class="ui left demo vertical inverted sidebar labeled icon menu">
-    <a class="active item" href="/wiki"><i class="home icon"></i>LYnWiki</a>
+    <a class="active item"><i class="home icon"></i>LYnWiki</a>
     <a class="item" href="/wiki/random"><i class="random icon"></i>랜덤</a>
-    <a class="item" href=".."><i class="align justify icon"></i>본문 보기</a>
-    <a class="item" href="../modify"><i class="write icon"></i>편집</a>
+    <a class="item" href="modify"><i class="write icon"></i>항목 만들기</a>
 </div>
 <div class="pusher">
     <div class="ui inverted vertical masthead center aligned segment">
@@ -22,10 +22,9 @@
                 </a>
                 <a class="active item" href="/wiki">LYnWiki</a>
                 <a class="item" href="/wiki/random">랜덤</a>
-                <a class="item" href="..">본문 보기</a>
-                <a class="item" href="../modify">편집</a>
+                <a class="item" href="modify">항목 만들기</a>
                 <div class="right item wikiform titlebar" style="padding: 0">
-                    <form class="ui form" name="wikiForm" method="post" action="/v1/wiki/search/">
+                    <form class="ui form" name="wikiForm" method="post" action="{% url 'wikiapi-search' %}">
                         {% csrf_token %}
                         <div class="ui icon input">
                             <input class="navbar-search" type="text" name="title" placeholder="검색어를 입력...">
@@ -37,18 +36,17 @@
         </div>
     </div>
     <div class="header">
-        <h1>편집 역사</h1>
+        <h1>{{ title }}</h1>
+        <h2>검색 실패</h2>
     </div>
     <div class="content article-description">
-        <div class="ui relaxed divided list endless_page_template">
-            {% include page_template %}
-        </div>
-
-        {% block js %}
-            {{ block.super }}
-            <script src="{% static 'js/el-pagination.js' %}"></script>
-            <script>$.endlessPaginate();</script>
-        {% endblock %}
+        <p>해당하는 문서가 없습니다. <a href="modify">작성하러 가기</a></p>
+        <h2>이 문서를 찾고 계시나요?</h2>
+        <ul>
+        {% for article in recommends %}
+            <li><a href="{% url 'wiki-article' article.title %}">{{ article.title }}</a></li>
+        {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock %}
