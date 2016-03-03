@@ -15,5 +15,5 @@ urlpatterns = [
 	url(r'^(?P<pk>[\w|\W]+)/history/$', show_history, name='wiki-articlehistory'),
 	url(r'^(?P<pk>[\w|\W]+)/$', find_article, name='wiki-article'),
 
-	url(r'^$', WikiHome.as_view(), name='wiki-main'),
+	url(r'^$', WikiHome.as_view(), name='wiki'),
 ]

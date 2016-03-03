@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-simple-wiki',
-    version='0.0.1',
+    version='0.0.2',
     packages=['simple-wiki'],
     include_package_data=True,
     license='GNU GENERAL PUBLIC LICENSE v2',
