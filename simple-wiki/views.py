@@ -23,16 +23,17 @@ class WikiContent(DetailView):
 
 @login_required(login_url='/accounts/login/')
 def modify_article(request, pk):
-    article = Article.objects.get(title=pk)
-    if article:
+    try:
+        article = Article.objects.get(title=pk)
+    except ObjectDoesNotExist:
+        content = ''
+        code = ''
+    else:
         content = article.content
         code = article.code
 
         if code == 403:
             raise PermissionDenied
-    else:
-        content = ''
-        code = ''
 
     return render_to_response('modify.html', {'title': pk, 'content': content, 'code': code}, context_instance=RequestContext(request))
 
