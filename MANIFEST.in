@@ -1,4 +1,4 @@
 include LICENSE
 include README.md
-recursive-include simple-wiki/static *
-recursive-include simple-wiki/templates *
+recursive-include simple_wiki/static *
+recursive-include simple_wiki/templates *

@@ -29,6 +29,9 @@ class Article(models.Model):
     def __unicode__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('wiki-article', kwargs={'pk': self.title})
+
 class ModifyHistory(models.Model):
     class Meta:
         verbose_name = u'wiki_history'
