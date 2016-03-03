@@ -1,6 +1,6 @@
 function onClickMenu() {
 	$('.ui.sidebar')
-	  .sidebar('setting', 'transition', 'overlay')
-	  .sidebar('toggle')
+		.sidebar('setting', 'transition', 'overlay')
+		.sidebar('toggle')
 	;
 }
