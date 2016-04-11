@@ -1,0 +1,5 @@
+# -*- coding: utf-8 -*-
+
+# Global Variables
+WIKI_NAME = ""
+WIKI_SLOGAN = ""

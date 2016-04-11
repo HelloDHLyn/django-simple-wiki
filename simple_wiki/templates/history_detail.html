@@ -5,14 +5,14 @@
 <link rel="stylesheet" href="{% static 'article.css' %}">
 <script src="{% static 'wiki.js' %}"></script>
 <script src="{% static 'shortcuts.js' %}"></script>
-<title>편집 역사 | LYnWiki</title>
+<title>편집 역사 | {{ wiki_name }}</title>
 {% endblock %}
 {% block content %}
 <div class="ui left demo vertical inverted sidebar labeled icon menu">
-    <a class="active item" href="/wiki"><i class="home icon"></i>LYnWiki</a>
-    <a class="item" href="/wiki/random"><i class="random icon"></i>랜덤</a>
-    <a class="item" href="/wiki/history"><i class="history icon"></i>최근 변경</a>
-    <a class="item" href=".."><i class="history icon"></i>편집 역사</a>
+    <a class="active item" href="{% url 'wiki-main' %}"><i class="home icon"></i>{{ wiki_name }}</a>
+    <a class="item" href="{% url 'wiki-random' %}"><i class="random icon"></i>랜덤</a>
+    <a class="item" href="{% url 'wiki-history' %}"><i class="history icon"></i>최근 변경</a>
+    <a class="item" href="{% url 'wiki-articlehistory' title %}"><i class="history icon"></i>편집 역사</a>
 </div>
 <div class="pusher">
     <div class="ui inverted vertical masthead center aligned segment">
@@ -21,10 +21,10 @@
                 <a class="toc item">
                     <i class="sidebar icon" onclick="onClickMenu()"></i>
                 </a>
-                <a class="active item" href="/wiki">LYnWiki</a>
-                <a class="item" href="/wiki/random">랜덤</a>
-                <a class="item" href="/wiki/history">최근 변경</a>
-                <a class="item" href="..">편집 역사</a>
+                <a class="active item" href="{% url 'wiki-main' %}">{{ wiki_name }}</a>
+                <a class="item" href="{% url 'wiki-random' %}">랜덤</a>
+                <a class="item" href="{% url 'wiki-history' %}">최근 변경</a>
+                <a class="item" href="{% url 'wiki-articlehistory' title %}">편집 역사</a>
                 <div class="right item wikiform titlebar" style="padding: 0">
                     <form class="ui form" name="wikiForm" method="post" action="{% url 'wikiapi-search' %}">
                         {% csrf_token %}

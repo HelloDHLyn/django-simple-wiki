@@ -5,14 +5,14 @@
 <link rel="stylesheet" href="{% static 'article.css' %}">
 <script src="{% static 'wiki.js' %}"></script>
 <script src="{% static 'shortcuts.js' %}"></script>
-<title>검색 실패 | LYnWiki</title>
+<title>검색 실패 | {{ wiki_name }}</title>
 {% endblock %}
 {% block content %}
 <div class="ui left demo vertical inverted sidebar labeled icon menu">
-    <a class="active item"><i class="home icon"></i>LYnWiki</a>
-    <a class="item" href="/wiki/random"><i class="random icon"></i>랜덤</a>
-    <a class="item" href="/wiki/history"><i class="history icon"></i>최근 변경</a>
-    <a class="item" href="modify"><i class="write icon"></i>항목 만들기</a>
+    <a class="active item" href="{% url 'wiki-main' %}"><i class="home icon"></i>{{ wiki_name }}</a>
+    <a class="item" href="{% url 'wiki-random' %}"><i class="random icon"></i>랜덤</a>
+    <a class="item" href="{% url 'wiki-history' %}"><i class="history icon"></i>최근 변경</a>
+    <a class="item" href="{% url 'wiki-modify' title %}"><i class="write icon"></i>항목 만들기</a>
 </div>
 <div class="pusher">
     <div class="ui inverted vertical masthead center aligned segment">
@@ -21,10 +21,10 @@
                 <a class="toc item">
                     <i class="sidebar icon" onclick="onClickMenu()"></i>
                 </a>
-                <a class="active item" href="/wiki">LYnWiki</a>
-                <a class="item" href="/wiki/random">랜덤</a>
-                <a class="item" href="/wiki/history">최근 변경</a>
-                <a class="item" href="modify">항목 만들기</a>
+                <a class="active item" href="{% url 'wiki-main' %}">{{ wiki_name }}</a>
+                <a class="item" href="{% url 'wiki-random' %}">랜덤</a>
+                <a class="item" href="{% url 'wiki-history' %}">최근 변경</a>
+                <a class="item" href="{% url 'wiki-modify' title %}">항목 만들기</a>
                 <div class="right item wikiform titlebar" style="padding: 0">
                     <form class="ui form" name="wikiForm" method="post" action="{% url 'wikiapi-search' %}">
                         {% csrf_token %}
@@ -42,7 +42,7 @@
         <h2>검색 실패</h2>
     </div>
     <div class="content article-description">
-        <p>해당하는 문서가 없습니다. <a href="modify">작성하러 가기</a></p>
+        <p>해당하는 문서가 없습니다. <a href="{% url 'wiki-modify' title %}">작성하러 가기</a></p>
         <h2>이 문서를 찾고 계시나요?</h2>
         <ul>
         {% for article in recommends %}

@@ -18,5 +18,5 @@ urlpatterns = [
 	url(r'^(?P<pk>[\w|\W]+)/$', find_article, name='wiki-article'),
 
 	# Main
-	url(r'^$', WikiHome.as_view(), name='wiki'),
+	url(r'^$', WikiHome.as_view(), name='wiki-main'),
 ]

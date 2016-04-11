@@ -12,7 +12,6 @@ from django.http import HttpResponseRedirect
 
 from .models import Article, ModifyHistory
 
-
 class WikiHome(ListView):
     model = Article
     template_name = 'home.html'
@@ -81,6 +80,7 @@ def show_history(request, pk):
 
     context = {
         'object_list': ModifyHistory.objects.filter(title=pk).order_by('-timestamp'),
+        'title': pk,
         'page_template': paged_template_name,
     }
 
