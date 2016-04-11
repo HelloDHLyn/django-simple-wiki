@@ -84,6 +84,11 @@ The content `<div>` is where all your content goes.
     text-transform: uppercase;
 }
 
+/* Editor */
+.CodeMirror, .CodeMirror-scroll {
+    height: 300px;
+}
+
 /* -- Responsive Styles (Media Queries) ------------------------------------- */
 
 /*
