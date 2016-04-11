@@ -66,7 +66,8 @@ def show_history_all(request):
 
     context = {
         'object_list': ModifyHistory.objects.all().order_by('-timestamp'),
-        'page_template': paged_template_name
+        'page_template': paged_template_name,
+        'is_global_history': True,
     }
 
     if request.is_ajax():
@@ -80,7 +81,7 @@ def show_history(request, pk):
 
     context = {
         'object_list': ModifyHistory.objects.filter(title=pk).order_by('-timestamp'),
-        'page_template': paged_template_name
+        'page_template': paged_template_name,
     }
 
     if request.is_ajax():
@@ -92,3 +93,14 @@ def show_history_detail(request, pk):
     obj = ModifyHistory.objects.filter(code=pk)
     diff = obj[0].diff.split('\n')
     return render_to_response('history_detail.html', {'title': obj[0].title, 'diff': diff}, context_instance=RequestContext(request))
+
+def show_wikiinfo(request):
+    article_count = Article.objects.count()
+    modify_count = ModifyHistory.objects.count()
+
+    context = {
+        'article_count': article_count,
+        'modify_count': modify_count,
+    }
+
+    return render(request, 'wikiinfo.html', context, context_instance=RequestContext(request))

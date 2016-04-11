@@ -2,20 +2,15 @@
 {% block style %}
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'wiki.css' %}">
-<link rel="stylesheet" href="{% static 'article.css' %}">
 <script src="{% static 'wiki.js' %}"></script>
 <script src="{% static 'shortcuts.js' %}"></script>
-<title>편집 역사 | LYnWiki</title>
+<title>위키 정보 | LYnWiki</title>
 {% endblock %}
 {% block content %}
 <div class="ui left demo vertical inverted sidebar labeled icon menu">
-    <a class="active item" href="/wiki"><i class="home icon"></i>LYnWiki</a>
+    <a class="active item"><i class="home icon"></i>LYnWiki</a>
     <a class="item" href="/wiki/random"><i class="random icon"></i>랜덤</a>
     <a class="item" href="/wiki/history"><i class="history icon"></i>최근 변경</a>
-    {% if not is_global_history %}
-    <a class="item" href="../modify"><i class="write icon"></i>편집</a>
-    <a class="item" href=".."><i class="align justify icon"></i>본문 보기</a>
-    {% endif %}
 </div>
 <div class="pusher">
     <div class="ui inverted vertical masthead center aligned segment">
@@ -27,10 +22,6 @@
                 <a class="active item" href="/wiki">LYnWiki</a>
                 <a class="item" href="/wiki/random">랜덤</a>
                 <a class="item" href="/wiki/history">최근 변경</a>
-                {% if not is_global_history %}
-                <a class="item" href="../modify">편집</a>
-                <a class="item" href="..">본문 보기</a>
-                {% endif %}
                 <div class="right item wikiform titlebar" style="padding: 0">
                     <form class="ui form" name="wikiForm" method="post" action="{% url 'wikiapi-search' %}">
                         {% csrf_token %}
@@ -43,19 +34,19 @@
             </div>
         </div>
     </div>
-    <div class="header">
-        <h1>편집 역사</h1>
-    </div>
-    <div class="content article-description">
-        <div class="ui relaxed divided list endless_page_template">
-            {% include page_template %}
+    <div class="content">
+        <h1>위키 정보</h1>
+        <h2>문서 정보</h2>
+        <div class="ui two statistics">
+            <div class="statistic">
+                <div class="label">총 문서 수</div>
+                <div class="value"><i class="file text icon"></i> {{ article_count }}</div>
+            </div>
+            <div class="statistic">
+                <div class="label">총 편집 횟수</div>
+                <div class="value"><i class="write icon"></i> {{ modify_count }}</div>
+            </div>
         </div>
-
-        {% block js %}
-            {{ block.super }}
-            <script src="{% static 'js/el-pagination.js' %}"></script>
-            <script>$.endlessPaginate();</script>
-        {% endblock %}
     </div>
 </div>
 {% endblock %}
