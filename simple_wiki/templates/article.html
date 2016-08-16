@@ -3,19 +3,26 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'wiki.css' %}">
 <link rel="stylesheet" href="{% static 'article.css' %}">
+<script src="{% static 'toc.min.js' %}"></script>
 <script src="{% static 'wiki.js' %}"></script>
 <script src="{% static 'shortcuts.js' %}"></script>
 <title>{{ article.title }} | {{ wiki_name }}</title>
 {% endblock %}
 {% block content %}
-<div class="ui left demo vertical inverted sidebar labeled icon menu">
+<div class="ui left demo vertical inverted sidebar labeled icon menu" id="main-sidebar">
     <a class="active item" href="{% url 'wiki-main' %}"><i class="home icon"></i>{{ wiki_name }}</a>
     <a class="item" href="{% url 'wiki-random' %}"><i class="random icon"></i>랜덤</a>
     <a class="item" href="{% url 'wiki-history' %}"><i class="history icon"></i>최근 변경</a>
     <a class="item" href="{% url 'wiki-modify' article.title %}"><i class="write icon"></i>편집</a>
     <a class="item" href="{% url 'wiki-articlehistory' article.title %}"><i class="history icon"></i>편집 역사</a>
 </div>
+<div class="ui left sidebar inverted vertical menu" id="toc-sidebar">
+    <div id="table-of-contents"></div>
+</div>
 <div class="pusher">
+    <div class="ui floating black circular big icon button" id="toggle-toc">
+        <i class="sidebar icon"></i>
+    </div>
     <div class="ui inverted vertical masthead center aligned segment">
         <div class="ui container">
             <div class="ui large secondary inverted pointing menu">
@@ -40,8 +47,8 @@
         </div>
     </div>
     <div class="header">
-        <h1>{{ article.title }}</h1>
-        <h2>{{ article.subtitle }}</h2>
+        <p class="title">{{ article.title }}</p>
+        <p class="subtitle">{{ article.subtitle }}</p>
     </div>
     <div class="content article-description">
         {% load markup_tags %}

@@ -8,7 +8,7 @@
 {% endblock %}
 {% block content %}
 <!-- Page Contents -->
-<div class="ui left demo vertical inverted sidebar labeled icon menu">
+<div class="ui left demo vertical inverted sidebar labeled icon menu" id="main-sidebar">
     <a class="active item"><i class="home icon"></i>{{ wiki_name }}</a>
     <a class="item" href="{% url 'wiki-random' %}"><i class="random icon"></i>랜덤</a>
     <a class="item" href="{% url 'wiki-history' %}"><i class="history icon"></i>최근 변경</a>
